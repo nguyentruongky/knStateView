@@ -10,23 +10,22 @@ import UIKit
 
 enum knState: String {
     case success
-    case noInternet
-    case error, empty, loading
+    case noInternet, error, empty, loading
 }
 
 class knStateView: knView {
     private var currentView: UIView?
-    private var customViews = [knState: UIView]()
-    private let imgView = UIMaker.makeImageView()
+    private let iconImageView = UIMaker.makeImageView()
     private let titleLabel = UIMaker.makeLabel(font: UIFont.boldSystemFont(ofSize: 17),
                                                color: UIColor.darkGray,
                                                numberOfLines: 2, alignment: .center)
-    private let contentLabel = UIMaker.makeLabel(font: UIFont.systemFont(ofSize: 17),
+    private let subtitleLabel = UIMaker.makeLabel(font: UIFont.systemFont(ofSize: 17),
                                                  color: UIColor.lightGray,
                                                  numberOfLines: 2, alignment: .center)
     private let container = UIMaker.makeStackView()
     
-    private var contents = [
+    private var customViewsLibrary = [knState: UIView]()
+    private var contentLibrary = [
         knState.noInternet: (icon: "no_internet",
                              title: "Oops, no connection",
                              subtitle: "The internet connection appears to be offline."),
@@ -40,6 +39,7 @@ class knStateView: knView {
                           title: "Give me seconds",
                           subtitle: ""),
         ]
+    
     
     var state = knState.success {
         didSet {
@@ -58,15 +58,15 @@ class knStateView: knView {
     override func setupView() {
         backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
-        container.addArrangedSubview(imgView)
+        container.addArrangedSubview(iconImageView)
         container.addArrangedSubview(titleLabel)
-        container.addArrangedSubview(contentLabel)
-        imgView.centerX(toView: container)
-        imgView.width(toView: container, multiplier: 0.5, greater: 0)
-        imgView.square()
+        container.addArrangedSubview(subtitleLabel)
+        iconImageView.centerX(toView: container)
+        iconImageView.width(toView: container, multiplier: 0.5, greater: 0)
+        iconImageView.square()
         
         titleLabel.horizontal(toView: container, space: 16)
-        contentLabel.horizontal(toView: titleLabel)
+        subtitleLabel.horizontal(toView: titleLabel)
         
         addSubviews(views: container)
         container.horizontal(toView: self)
@@ -76,11 +76,11 @@ class knStateView: knView {
 
 extension knStateView {
     func setCustomView(_ view: UIView, for state: knState) {
-        customViews[state] = view
+        customViewsLibrary[state] = view
     }
     
     func setContent(image: String, title: String = "", subtitle: String = "", for state: knState) {
-        contents[state] = (image, title, subtitle)
+        contentLibrary[state] = (image, title, subtitle)
     }
 }
 
@@ -93,21 +93,21 @@ extension knStateView {
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                 let data = data, error == nil,
                 let image = UIImage(data: data) else { return }
-            DispatchQueue.main.async() { [weak self] in self?.imgView.image = image }
+            DispatchQueue.main.async() { [weak self] in self?.iconImageView.image = image }
             }.resume()
     }
     
     private func setState(_ value: knState) {
         currentView?.removeFromSuperview()
         
-        if let view = customViews[value] {
+        if let view = customViewsLibrary[value] {
             currentView = view
             addSubviews(views: view)
             view.center(toView: self)
             return
         }
         
-        if let data = contents[value] {
+        if let data = contentLibrary[value] {
             setData(data)
             return
         }
@@ -119,18 +119,18 @@ extension knStateView {
     
     private func setData(_ data: (icon: String, title: String, subtitle: String)) {
         if state == .loading {
-            imgView.loadGif(name: data.icon)
+            iconImageView.loadGif(name: data.icon)
         } else if data.icon.contains("http") {
             downloadImage(urlString: data.icon)
         } else {
-            imgView.image = UIImage(named: data.icon)
+            iconImageView.image = UIImage(named: data.icon)
         }
         
         titleLabel.text = data.title
-        contentLabel.text = data.subtitle
+        subtitleLabel.text = data.subtitle
         
         if data.icon.isEmpty {
-            imgView.removeFromSuperview()
+            iconImageView.removeFromSuperview()
         }
         
         if data.title.isEmpty {
@@ -138,7 +138,7 @@ extension knStateView {
         }
         
         if data.subtitle.isEmpty {
-            contentLabel.removeFromSuperview()
+            subtitleLabel.removeFromSuperview()
         }
     }
 }

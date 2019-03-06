@@ -26,7 +26,10 @@ class StateDemoController: UIViewController {
     }
     
     func showCustomLoading() {
-        stateView.setContent(image: "loading_2", title: "New loading view", subtitle: "", for: .loading)
+        stateView.setContent(image: "loading_2",
+                             title: "New loading view",
+                             subtitle: "",
+                             for: .loading)
         stateView.state = .loading
     }
 }
