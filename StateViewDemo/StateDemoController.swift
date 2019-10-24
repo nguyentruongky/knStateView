@@ -13,16 +13,19 @@ class StateDemoController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        view.addSubview(stateView)
-        stateView.horizontal(toView: view)
-        stateView.centerY(toView: view)
+    }
+    
+    func showState(_ state: knState) {
+        stateView.show(state: state, in: view)
     }
     
     func showCustomErrorView() {
-        let imageView = UIMaker.makeImageView(image: UIImage(named: "404"), contentMode: .scaleAspectFit)
-        stateView.setCustomView(imageView, for: .error)
-        stateView.state = .error
+        let iv = UIImageView(image: UIImage(named: "404"))
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        stateView.setCustomView(iv, for: .error)
+        stateView.show(state: .error, in: view)
     }
     
     func showCustomLoading() {
@@ -30,6 +33,6 @@ class StateDemoController: UIViewController {
                              title: "New loading view",
                              subtitle: "",
                              for: .loading)
-        stateView.state = .loading
+        stateView.show(state: .loading, in: view)
     }
 }

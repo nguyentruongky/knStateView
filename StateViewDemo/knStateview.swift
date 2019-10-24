@@ -13,54 +13,95 @@ enum knState: String {
     case noInternet, error, empty, loading
 }
 
-class knStateView: knView {
+final class knStateView: UIView {
     private var currentView: UIView?
-    private let iconImageView = UIMaker.makeImageView()
-    private let titleLabel = UIMaker.makeLabel(font: UIFont.boldSystemFont(ofSize: 17),
-                                               color: UIColor.darkGray,
-                                               numberOfLines: 2, alignment: .center)
-    private let subtitleLabel = UIMaker.makeLabel(font: UIFont.systemFont(ofSize: 17),
-                                                 color: UIColor.lightGray,
-                                                 numberOfLines: 2, alignment: .center)
-    private let container = UIMaker.makeStackView()
+    private let iconImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        return iv
+    }()
+    private let titleLabel = UIMaker.makeLabel(
+        font: UIFont.boldSystemFont(ofSize: 17),
+        color: UIColor.darkGray,
+        numberOfLines: 2,
+        alignment: .center)
+    private let subtitleLabel = UIMaker.makeLabel(
+        font: UIFont.systemFont(ofSize: 17),
+        color: UIColor.lightGray,
+        numberOfLines: 2,
+        alignment: .center)
+    private let container: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.spacing = 16
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     private var customViewsLibrary = [knState: UIView]()
     private var contentLibrary = [
-        knState.noInternet: (icon: "no_internet",
-                             title: "Oops, no connection",
-                             subtitle: "The internet connection appears to be offline."),
-        knState.error: (icon: "generic_error",
-                        title: "There's an error",
-                        subtitle: "There was an error. Please try again later."),
-        knState.empty: (icon: "empty",
-                        title: "No content",
-                        subtitle: "I am lonly here"),
-        knState.loading: (icon: "loading",
-                          title: "Give me seconds",
-                          subtitle: ""),
-        ]
+        knState.noInternet: (
+            icon: "no_internet",
+            title: "Oops, no connection",
+            subtitle: "The internet connection appears to be offline."),
+        knState.error: (
+            icon: "generic_error",
+            title: "Huh?",
+            subtitle: "There was an error. Please try again later."),
+        knState.empty: (
+            icon: "empty",
+            title: "No content",
+            subtitle: "I am lonely here"),
+        knState.loading: (
+            icon: "loading",
+            title: "Give me a few seconds",
+            subtitle: ""),
+    ]
     
     
-    var state = knState.success {
+    private(set) var state = knState.success {
         didSet {
             guard state != oldValue else { return }
             setState(state)
         }
     }
     
+    private override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+extension knStateView {
     func show(state: knState, in view: UIView, space: UIEdgeInsets = .zero) {
         view.addSubviews(views: self)
         fill(toView: view, space: space)
         
         self.state = state
     }
+
+    func setCustomView(_ view: UIView, for state: knState) {
+        customViewsLibrary[state] = view
+    }
     
-    override func setupView() {
+    func setContent(image: String, title: String = "", subtitle: String = "", for state: knState) {
+        contentLibrary[state] = (image, title, subtitle)
+    }
+}
+
+extension knStateView {
+    private func setupView() {
         backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
         container.addArrangedSubview(iconImageView)
         container.addArrangedSubview(titleLabel)
         container.addArrangedSubview(subtitleLabel)
+        
         iconImageView.centerX(toView: container)
         iconImageView.width(toView: container, multiplier: 0.5, greater: 0)
         iconImageView.square()
@@ -72,19 +113,7 @@ class knStateView: knView {
         container.horizontal(toView: self)
         container.centerY(toView: self, space: -75)
     }
-}
 
-extension knStateView {
-    func setCustomView(_ view: UIView, for state: knState) {
-        customViewsLibrary[state] = view
-    }
-    
-    func setContent(image: String, title: String = "", subtitle: String = "", for state: knState) {
-        contentLibrary[state] = (image, title, subtitle)
-    }
-}
-
-extension knStateView {
     private func downloadImage(urlString: String) {
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in

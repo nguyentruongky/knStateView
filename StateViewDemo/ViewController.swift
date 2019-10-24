@@ -64,7 +64,7 @@ class ViewController: UIViewController {
     
     func showStateDemo(state: knState) {
         let controller = StateDemoController()
-        controller.stateView.state = state
+        controller.showState(state)
         navigationController?.pushViewController(controller, animated: true)
     }
     

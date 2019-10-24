@@ -14,9 +14,7 @@
 		261C6BD6222F78B400616EAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 261C6BD4222F78B400616EAB /* LaunchScreen.storyboard */; };
 		261C6BDE222F78E300616EAB /* knStateview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261C6BDD222F78E200616EAB /* knStateview.swift */; };
 		261C6BE0222F78F300616EAB /* knConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261C6BDF222F78F300616EAB /* knConstraints.swift */; };
-		261C6BE2222F7C1C00616EAB /* knView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261C6BE1222F7C1C00616EAB /* knView.swift */; };
 		261C6BE4222F7C3400616EAB /* knUIMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261C6BE3222F7C3400616EAB /* knUIMaker.swift */; };
-		261C6BE6222F7C4A00616EAB /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261C6BE5222F7C4A00616EAB /* UIViewExtension.swift */; };
 		261C6BE8222F7C7000616EAB /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261C6BE7222F7C7000616EAB /* UIImage+Gif.swift */; };
 		261C6BEA222F7F6000616EAB /* StateDemoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261C6BE9222F7F6000616EAB /* StateDemoController.swift */; };
 		261C6BEC222F824300616EAB /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 261C6BEB222F824300616EAB /* loading.gif */; };
@@ -33,9 +31,7 @@
 		261C6BD7222F78B400616EAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		261C6BDD222F78E200616EAB /* knStateview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = knStateview.swift; sourceTree = "<group>"; };
 		261C6BDF222F78F300616EAB /* knConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = knConstraints.swift; sourceTree = "<group>"; };
-		261C6BE1222F7C1C00616EAB /* knView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = knView.swift; sourceTree = "<group>"; };
 		261C6BE3222F7C3400616EAB /* knUIMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = knUIMaker.swift; sourceTree = "<group>"; };
-		261C6BE5222F7C4A00616EAB /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		261C6BE7222F7C7000616EAB /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		261C6BE9222F7F6000616EAB /* StateDemoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateDemoController.swift; sourceTree = "<group>"; };
 		261C6BEB222F824300616EAB /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
@@ -90,9 +86,7 @@
 		261C6BED222F84B100616EAB /* supports */ = {
 			isa = PBXGroup;
 			children = (
-				261C6BE1222F7C1C00616EAB /* knView.swift */,
 				261C6BE7222F7C7000616EAB /* UIImage+Gif.swift */,
-				261C6BE5222F7C4A00616EAB /* UIViewExtension.swift */,
 				261C6BE3222F7C3400616EAB /* knUIMaker.swift */,
 				261C6BDF222F78F300616EAB /* knConstraints.swift */,
 			);
@@ -172,11 +166,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				261C6BE2222F7C1C00616EAB /* knView.swift in Sources */,
 				261C6BDE222F78E300616EAB /* knStateview.swift in Sources */,
 				261C6BCE222F78B300616EAB /* ViewController.swift in Sources */,
 				261C6BCC222F78B300616EAB /* AppDelegate.swift in Sources */,
-				261C6BE6222F7C4A00616EAB /* UIViewExtension.swift in Sources */,
 				261C6BE0222F78F300616EAB /* knConstraints.swift in Sources */,
 				261C6BE8222F7C7000616EAB /* UIImage+Gif.swift in Sources */,
 				261C6BE4222F7C3400616EAB /* knUIMaker.swift in Sources */,
@@ -327,6 +319,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YM62LBZ4XN;
 				INFOPLIST_FILE = StateViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -344,6 +337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YM62LBZ4XN;
 				INFOPLIST_FILE = StateViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
